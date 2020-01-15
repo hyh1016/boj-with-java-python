@@ -1,3 +1,7 @@
+/*
+ * 문제 번호 : 1003
+ * 이름 : 피보나치 함수
+ */
 package Q1003;
 
 import java.util.Scanner;
