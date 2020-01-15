@@ -1,6 +1,6 @@
 /*
- * 문제 번호 : 1000
- * 이름 : A+B
+ * number : 1000
+ * name : A+B
 */
 package Q1000;
 
