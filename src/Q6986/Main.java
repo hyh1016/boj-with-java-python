@@ -18,27 +18,21 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			ave.add(sc.nextDouble());
 		}
-
 		ave.sort(null);
-
-		double sum = 0;
+		
 		// Àı»çÆò±Õ
+		double sum = 0;
 		for (int i = K; i < N - K; i++) {
 			sum += ave.get(i);
 		}
 		System.out.printf("%.2f\n", sum / (N - 2 * K));
 
-		sum = 0;
 		// º¸Á¤Æò±Õ
-		for (int i = 0; i < N; i++) {
-			if (i < K)
-				sum += ave.get(K);
-			else if (i > N - K - 1)
-				sum += ave.get(N - K - 1);
-			else
-				sum += ave.get(i);
-		}
+		sum+=ave.get(K)*K;
+		sum+=ave.get(N-K-1)*K;
 		System.out.printf("%.2f\n", sum / N);
+		
+		sc.close();
 
 	}
 
