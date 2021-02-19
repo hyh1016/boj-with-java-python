@@ -4,9 +4,11 @@ def dfs(n, selected):
     if current == n:
         answer += 1
         return
-    candidate = [i for i in list(range(n)) if i not in selected]  # 선택하지 않은 열 중
+    candidate = set((range(n)))  # 선택하지 않은 열 중
     for i in range(current):  # 대각선으로 잡히는 경우 제외
         distance = current - i
+        if selected[i] in candidate:
+            candidate.remove(selected[i])
         if selected[i] + distance in candidate:
             candidate.remove(selected[i] + distance)
         if selected[i] - distance in candidate:
