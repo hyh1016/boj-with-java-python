@@ -1,4 +1,4 @@
-import urllib.request
+import requests
 import re
 import git
 
@@ -11,8 +11,11 @@ ERROR_GIT_PUSH = "PUSH ERROR: 원격 리포지토리에 반영하지 못하였�
 def get_title(number):
     # read problem title
     try:
-        html = urllib.request.urlopen(
-            f"https://www.acmicpc.net/problem/{number}").read().decode("utf8")
+        url = f"https://www.acmicpc.net/problem/{number}"
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
+        }
+        html = requests.get(url, headers=headers).content.decode("utf8")
         title = re.search(r"<title>\d*번: (.*)</title>", html).group(1)
         return title
     except:
@@ -24,13 +27,13 @@ def get_commit_message(title, number):
     # create commit message
     header = f"Add solution of {number}"
     body = f"- [{number}. {title}] 문제 풀이"
-    commit_message = header + '\n' + body
+    commit_message = header + "\n" + body
     return commit_message
 
 
 def commit_and_push(file_name, commit_message):
     try:
-        repository = git.Repo('../.git')
+        repository = git.Repo("../.git")
     except:
         print(ERROR_GET_REPOSITORY)
         exit()
@@ -59,14 +62,14 @@ def push(repository):
 
 
 # type problem number
-number = int(input())
+number = int(input("문제 번호 입력: "))
 
 title = get_title(number)
 
 commit_message = get_commit_message(title, number)
 print(f"문제정보: [{number}. {title}]")
 is_commit_and_push = input("커밋하시겠습니까? [y/n]: ")
-if is_commit_and_push == 'y' or is_commit_and_push == 'Y':
+if is_commit_and_push == "y" or is_commit_and_push == "Y":
     commit_and_push(f"{number}.py", commit_message)
 else:
     print("동작이 취소되었습니다.")
