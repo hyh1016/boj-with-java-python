@@ -1,17 +1,21 @@
 import sys
 input = sys.stdin.readline
 
-d, k = map(int, input().split())
-dp = [[0]*2 for _ in range(d+1)]
-dp[1][0] = dp[2][1] = 1
-for i in range(3, d+1):
-    for j in range(2):
-        dp[i][j] = dp[i-1][j] + dp[i-2][j]
-for x in range(k):
-    temp = (k - x*dp[d][0])
-    if temp % dp[d][1] != 0:
+d, k = list(map(int, input().split()))
+
+dp = [0] * d
+dp[1] = dp[2] = 1
+for i in range(3, d):
+    dp[i] = dp[i-1]+dp[i-2]
+
+fa = dp[d-2]
+fb = dp[d-1]
+
+for x in range(1, k):
+    temp = (k - fa*x)
+    if temp % fb != 0:
         continue
-    y = temp // dp[d][1]
+    y = temp // fb
     if y < x:
         continue
     print(x)
